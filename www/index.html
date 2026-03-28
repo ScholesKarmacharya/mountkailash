@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mount Kailash Water System</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      padding: 20px;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      padding: 34px;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    .login-box h2 {
+      margin-bottom: 24px;
+      font-size: 28px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 12px 16px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    .danger-btn {
+      background: #dc2626;
+    }
+
+    .danger-btn:hover {
+      background: #b91c1c;
+    }
+
+    .secondary-btn {
+      background: #0f172a;
+    }
+
+    .secondary-btn:hover {
+      background: #111827;
+    }
+
+    .message {
+      min-height: 20px;
+      font-weight: 600;
+      margin-top: 8px;
+    }
+
+    .app-layout {
+      display: flex;
+      min-height: 100vh;
+      background: #f1f5f9;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: #0f172a;
+      color: white;
+      padding: 24px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      line-height: 1.3;
+    }
+
+    .user-box {
+      background: rgba(255,255,255,0.08);
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .menu button {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 10px;
+      background: #1e293b;
+      color: white;
+      border: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: #2563eb;
+    }
+
+    .logout-btn {
+      margin-top: auto;
+      background: #dc2626 !important;
+    }
+
+    .main {
+      flex: 1;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .topbar p {
+      margin: 6px 0 0;
+      color: #475569;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      margin-bottom: 20px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 18px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+
+    .stat-title {
+      font-size: 14px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .low-stock {
+      color: #dc2626;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .toolbar input {
+      margin-bottom: 0;
+      flex: 1;
+      min-width: 180px;
+    }
+
+    .inline-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-size: 14px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-green {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-red {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .staff-page {
+      min-height: 100vh;
+      background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+      padding: 18px 14px 28px;
+    }
+
+    .staff-app-shell {
+      max-width: 460px;
+      margin: 0 auto;
+    }
+
+    .staff-app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .staff-app-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .staff-app-subtitle {
+      color: #64748b;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .staff-logout-btn {
+      background: #dc2626;
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+
+    .staff-logout-btn:hover {
+      background: #b91c1c;
+    }
+
+    .staff-summary-card {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      padding: 18px;
+      border-radius: 22px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 28px rgba(37, 99, 235, 0.28);
+    }
+
+    .staff-summary-top {
+      font-size: 15px;
+      opacity: 0.95;
+      margin-bottom: 14px;
+    }
+
+    .staff-summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .staff-summary-box {
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .staff-summary-label {
+      font-size: 13px;
+      opacity: 0.95;
+    }
+
+    .staff-summary-value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .staff-mini-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .staff-mini-card {
+      background: white;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .staff-mini-label {
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .staff-mini-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .staff-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .staff-tab-btn {
+      background: white;
+      color: #0f172a;
+      border: 1px solid #dbeafe;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-weight: 600;
+    }
+
+    .staff-tab-btn.active {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+
+    .staff-card {
+      background: white;
+      padding: 20px;
+      border-radius: 22px;
+      box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+      margin-bottom: 16px;
+    }
+
+    .staff-card h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+      font-size: 22px;
+      color: #0f172a;
+    }
+
+    .staff-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #334155;
+      margin-bottom: 8px;
+    }
+
+    .staff-card select,
+    .staff-card input {
+      height: 48px;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      font-size: 15px;
+      margin-bottom: 14px;
+    }
+
+    .staff-info-panel {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+
+    .staff-info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      color: #334155;
+      padding: 6px 0;
+    }
+
+    .staff-info-row.total {
+      margin-top: 6px;
+      padding-top: 12px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 17px;
+      color: #0f172a;
+    }
+
+    .staff-primary-btn {
+      width: 100%;
+      height: 50px;
+      border-radius: 14px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .staff-customer-info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 14px;
+      color: #1e3a8a;
+      font-size: 14px;
+    }
+
+    .staff-activity-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .staff-activity-list li {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .staff-toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #16a34a;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+      z-index: 9999;
+      font-weight: 600;
+    }
+
+    .staff-toast.error {
+      background: #dc2626;
+    }
+
+    .staff-tab-content.active {
+      display: block;
+    }
+
+    @media (max-width: 1100px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-layout {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .staff-mini-stats,
+      .staff-summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .staff-app-title {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .login-box {
+        padding: 24px;
+      }
+
+      .main {
+        padding: 16px;
+      }
+    }
+  </style>
+
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#2563eb">
+
+</head>
+<body>
+  <div id="loginPage" class="login-page">
+    <div class="login-box">
+      <h2>Login</h2>
+
+      <input id="loginUsername" placeholder="Username" />
+
+      <div style="position: relative;">
+        <input
+          id="loginPassword"
+          type="password"
+          placeholder="Password"
+          style="padding-right: 42px;"
+        />
+        <span
+          id="eyeIcon"
+          onclick="togglePassword()"
+          style="position:absolute;right:12px;top:50%;transform:translateY(-50%);cursor:pointer;"
+        >
+          👁️
+        </span>
+      </div>
+
+      <button style="width:100%;" onclick="login()">Login</button>
+      <p id="loginMsg" class="message" style="color:red;"></p>
+    </div>
+  </div>
+
+  <div id="adminLayout" class="app-layout hidden">
+    <aside class="sidebar">
+      <div class="brand">Mount Kailash<br>Water System</div>
+
+      <div class="user-box">
+        <div id="adminSidebarUsername">User</div>
+        <div id="adminSidebarRole">Role</div>
+      </div>
+
+      <div class="menu">
+        <button class="menu-btn active" onclick="showAdminSection('adminDashboardSection', this)">Dashboard</button>
+        <button class="menu-btn" onclick="showAdminSection('customerSection', this)">Customers</button>
+        <button class="menu-btn" onclick="showAdminSection('paymentSection', this)">Payments</button>
+        <button class="menu-btn" onclick="showAdminSection('ledgerSection', this)">Customer Ledger</button>
+        <button class="menu-btn" onclick="showAdminSection('stockSection', this)">Stock</button>
+        <button class="menu-btn" onclick="showAdminSection('salesHistorySection', this)">Sales History</button>
+        <button class="menu-btn" onclick="showAdminSection('returnsHistorySection', this)">Return History</button>
+        <button class="menu-btn logout-btn" onclick="logout()">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h1>Admin Dashboard</h1>
+          <p id="adminRoleLine"></p>
+        </div>
+      </div>
+
+      <section id="adminDashboardSection" class="section active">
+        <div class="card">
+          <h3>Overview</h3>
+          <p id="lowStockAlert" class="low-stock"></p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Today</h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-title">Jars Sold Today</div>
+                <div class="stat-value" id="jarsSoldToday">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-title">Revenue Today</div>
+                <div class="stat-value" id="revenueToday">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-title">Jars Returned Today</div>
+                <div class="stat-value" id="jarsReturnedToday">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>This Month</h3>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-title">Jars Sold This Month</div>
+                <div class="stat-value" id="jarsSoldMonth">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-title">Revenue This Month</div>
+                <div class="stat-value" id="revenueMonth">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Inventory Summary</h3>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-title">Available Stock</div>
+              <div class="stat-value" id="stock">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Total Customers</div>
+              <div class="stat-value" id="count">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Price per Jar</div>
+              <div class="stat-value" id="pricePerJar">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Jars With Customers</div>
+              <div class="stat-value" id="totalJarsWithCustomers">0</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-title">Low Stock Threshold</div>
+              <div class="stat-value" id="lowStockThreshold">0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="customerSection" class="section">
+        <div class="grid">
+          <div class="card">
+            <h3>Add / Edit Customer</h3>
+            <input type="hidden" id="customerId" />
+            <input id="customerCode" placeholder="Customer Code" />
+            <input id="name" placeholder="Customer Name" />
+            <input id="phone" placeholder="Phone" />
+            <input id="address" placeholder="Address" />
+            <textarea id="notes" placeholder="Notes"></textarea>
+
+            <div class="inline-actions">
+              <button onclick="saveCustomer()">Save Customer</button>
+              <button class="secondary-btn" onclick="resetCustomerForm()">Reset</button>
+            </div>
+
+            <p id="customerMsg" class="message"></p>
+          </div>
+
+          <div class="card">
+            <h3>Customer List</h3>
+
+            <div class="toolbar">
+              <input id="customerSearch" placeholder="Search by name, phone, or code" />
+              <button onclick="getCustomers()">Search</button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Code</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Jars With Customer</th>
+                    <th>Due Amount</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="customerTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="paymentSection" class="section">
+        <div class="card">
+          <h3>Record Payment</h3>
+
+          <select id="paymentCustomerSelect">
+            <option value="">Select Customer</option>
+          </select>
+
+          <input id="paymentAmount" type="number" step="0.01" placeholder="Payment amount" />
+          <input id="paymentRemarks" placeholder="Remarks" />
+
+          <button onclick="recordPayment()">Record Payment</button>
+          <p id="paymentMsg" class="message"></p>
+        </div>
+      </section>
+
+      <section id="ledgerSection" class="section">
+        <div class="card">
+          <h3>Customer Ledger</h3>
+
+          <select id="ledgerCustomerSelect">
+            <option value="">Select Customer</option>
+          </select>
+
+          <button onclick="loadCustomerLedger()">Load Ledger</button>
+          <p id="ledgerMsg" class="message"></p>
+        </div>
+
+        <div id="ledgerDetails" class="hidden">
+          <div class="card">
+            <h3>Customer Summary</h3>
+            <div id="ledgerSummary"></div>
+          </div>
+
+          <div class="grid">
+            <div class="card">
+              <h3>Sales</h3>
+              <ul id="ledgerSalesList"></ul>
+            </div>
+
+            <div class="card">
+              <h3>Returns</h3>
+              <ul id="ledgerReturnsList"></ul>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Payments</h3>
+            <ul id="ledgerPaymentsList"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="stockSection" class="section">
+        <div class="card">
+          <h3>Stock Refill / Update</h3>
+          <input id="addedQty" type="number" placeholder="Add stock quantity" />
+          <input id="newPrice" type="number" step="0.01" placeholder="Update price per jar" />
+          <input id="newThreshold" type="number" placeholder="Low stock threshold" />
+          <button onclick="refillStock()">Update Stock</button>
+          <p id="stockMsg" class="message"></p>
+        </div>
+      </section>
+
+      <section id="salesHistorySection" class="section">
+        <div class="card">
+          <h3>Sales History</h3>
+
+          <div class="toolbar">
+            <input id="fromDate" type="date" />
+            <input id="toDate" type="date" />
+            <button onclick="loadSales()">Filter Sales</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Staff</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Total</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="salesTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="returnsHistorySection" class="section">
+        <div class="card">
+          <h3>Return History</h3>
+
+          <div class="toolbar">
+            <input id="returnFromDate" type="date" />
+            <input id="returnToDate" type="date" />
+            <button onclick="loadReturns()">Filter Returns</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Staff</th>
+                  <th>Returned Qty</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="returnsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="staffLayout" class="staff-page hidden">
+    <div class="staff-app-shell">
+      <div class="staff-app-header">
+        <div>
+          <div class="staff-app-title">Water Staff App</div>
+          <div class="staff-app-subtitle" id="staffRoleLine"></div>
+        </div>
+        <button class="staff-logout-btn" onclick="logout()">Logout</button>
+      </div>
+
+      <div class="staff-summary-card">
+        <div class="staff-summary-top">Today’s Work</div>
+        <div class="staff-summary-grid">
+          <div class="staff-summary-box">
+            <span class="staff-summary-label">Price / Jar</span>
+            <span class="staff-summary-value">Rs. <span id="staffPricePreviewTop">0.00</span></span>
+          </div>
+          <div class="staff-summary-box">
+            <span class="staff-summary-label">Current Sale Total</span>
+            <span class="staff-summary-value">Rs. <span id="staffTotalPreviewTop">0.00</span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="staff-mini-stats">
+        <div class="staff-mini-card">
+          <span class="staff-mini-label">Jars Sold Today</span>
+          <span class="staff-mini-value" id="staffTodayJars">0</span>
+        </div>
+        <div class="staff-mini-card">
+          <span class="staff-mini-label">Sales Today</span>
+          <span class="staff-mini-value">Rs. <span id="staffTodayAmount">0.00</span></span>
+        </div>
+      </div>
+
+      <div class="staff-tabs">
+        <button id="staffSaleTabBtn" class="staff-tab-btn active" onclick="showStaffTab('sale')">Sell</button>
+        <button id="staffReturnTabBtn" class="staff-tab-btn" onclick="showStaffTab('return')">Return</button>
+      </div>
+
+      <div id="staffSaleTab" class="staff-tab-content active">
+        <div class="staff-card">
+          <h3>Sell Water Jars</h3>
+
+          <label class="staff-label">Search Customer</label>
+          <input id="staffCustomerSearch" placeholder="Type customer name..." oninput="filterCustomerDropdown('staffCustomerSearch', 'customerSelect')" />
+
+          <label class="staff-label">Customer</label>
+          <select id="customerSelect" onchange="updateSelectedCustomerInfo('customerSelect', 'staffCustomerInfo')">
+            <option value="">Select Customer</option>
+          </select>
+
+          <div id="staffCustomerInfo" class="staff-customer-info hidden"></div>
+
+          <label class="staff-label">Quantity</label>
+          <input id="sellQty" type="number" placeholder="Enter quantity" oninput="updateSalePreview()" />
+
+          <div class="staff-info-panel">
+            <div class="staff-info-row">
+              <span>Price per Jar</span>
+              <strong>Rs. <span id="staffPricePreview">0.00</span></strong>
+            </div>
+            <div class="staff-info-row total">
+              <span>Total Amount</span>
+              <strong>Rs. <span id="staffTotalPreview">0.00</span></strong>
+            </div>
+          </div>
+
+          <button class="staff-primary-btn" onclick="sellProduct()">Record Sale</button>
+          <p id="sellMsg" class="message"></p>
+        </div>
+      </div>
+
+      <div id="staffReturnTab" class="staff-tab-content hidden">
+        <div class="staff-card">
+          <h3>Record Jar Return</h3>
+
+          <label class="staff-label">Search Customer</label>
+          <input id="staffReturnSearch" placeholder="Type customer name..." oninput="filterCustomerDropdown('staffReturnSearch', 'returnCustomerSelect')" />
+
+          <label class="staff-label">Customer</label>
+          <select id="returnCustomerSelect" onchange="updateSelectedCustomerInfo('returnCustomerSelect', 'staffReturnCustomerInfo', true)">
+            <option value="">Select Customer</option>
+          </select>
+
+          <div id="staffReturnCustomerInfo" class="staff-customer-info hidden"></div>
+
+          <label class="staff-label">Returned Quantity</label>
+          <input id="returnQty" type="number" placeholder="Enter returned quantity" />
+
+          <button class="staff-primary-btn" onclick="recordReturn()">Record Return</button>
+          <p id="returnMsg" class="message"></p>
+        </div>
+      </div>
+
+      <div class="staff-card">
+        <h3>Recent Sales</h3>
+        <ul id="staffRecentSalesList" class="staff-activity-list"></ul>
+      </div>
+
+      <div class="staff-card">
+        <h3>Customer Overview</h3>
+        <ul id="staffRecentActivity" class="staff-activity-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let user = null;
+    let currentPricePerJar = 0;
+    let cachedCustomers = [];
+
+    function authHeaders() {
+      return {
+        "Content-Type": "application/json",
+        "x-user-id": user.id,
+        "x-user-role": user.role
+      };
+    }
+
+    function togglePassword() {
+      const input = document.getElementById("loginPassword");
+      const icon = document.getElementById("eyeIcon");
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "🙈";
+      } else {
+        input.type = "password";
+        icon.textContent = "👁️";
+      }
+    }
+
+    function showAdminSection(sectionId, btn) {
+      document.querySelectorAll("#adminLayout .section").forEach((section) => {
+        section.classList.remove("active");
+      });
+
+      document.getElementById(sectionId).classList.add("active");
+
+      document.querySelectorAll("#adminLayout .menu-btn").forEach((button) => {
+        button.classList.remove("active");
+      });
+
+      if (btn) {
+        btn.classList.add("active");
+      }
+    }
+
+    function showStaffTab(tab) {
+      const saleTab = document.getElementById("staffSaleTab");
+      const returnTab = document.getElementById("staffReturnTab");
+      const saleBtn = document.getElementById("staffSaleTabBtn");
+      const returnBtn = document.getElementById("staffReturnTabBtn");
+
+      if (tab === "sale") {
+        saleTab.classList.remove("hidden");
+        saleTab.classList.add("active");
+        returnTab.classList.add("hidden");
+        returnTab.classList.remove("active");
+        saleBtn.classList.add("active");
+        returnBtn.classList.remove("active");
+      } else {
+        returnTab.classList.remove("hidden");
+        returnTab.classList.add("active");
+        saleTab.classList.add("hidden");
+        saleTab.classList.remove("active");
+        returnBtn.classList.add("active");
+        saleBtn.classList.remove("active");
+      }
+    }
+
+    function showToast(message, isError = false) {
+      const toast = document.createElement("div");
+      toast.className = isError ? "staff-toast error" : "staff-toast";
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 2500);
+    }
+
+    function filterCustomerDropdown(inputId, selectId) {
+      const keyword = document.getElementById(inputId).value.toLowerCase();
+      const select = document.getElementById(selectId);
+
+      select.innerHTML = '<option value="">Select Customer</option>';
+
+      cachedCustomers
+        .filter((customer) => customer.name.toLowerCase().includes(keyword))
+        .forEach((customer) => {
+          const option = document.createElement("option");
+          option.value = customer.id;
+
+          if (selectId === "returnCustomerSelect") {
+            option.textContent = `${customer.name} | Outstanding: ${customer.jars_outstanding}`;
+          } else {
+            option.textContent = `${customer.name} (${customer.phone || "No phone"})`;
+          }
+
+          select.appendChild(option);
+        });
+    }
+
+    function updateSelectedCustomerInfo(selectId, targetId, showOutstandingOnly = false) {
+      const customerId = Number(document.getElementById(selectId).value);
+      const box = document.getElementById(targetId);
+
+      const customer = cachedCustomers.find((c) => c.id === customerId);
+
+      if (!customer) {
+        box.classList.add("hidden");
+        box.innerHTML = "";
+        return;
+      }
+
+      if (showOutstandingOnly) {
+        box.innerHTML = `
+          <strong>${customer.name}</strong><br>
+          Outstanding Jars: ${customer.jars_outstanding}<br>
+          Phone: ${customer.phone || "-"}
+        `;
+      } else {
+        box.innerHTML = `
+          <strong>${customer.name}</strong><br>
+          Phone: ${customer.phone || "-"}<br>
+          Address: ${customer.address || "-"}<br>
+          Current Due: Rs. ${Number(customer.due_amount || 0).toFixed(2)}
+        `;
+      }
+
+      box.classList.remove("hidden");
+    }
+
+    function updateSalePreview() {
+      const qty = Number(document.getElementById("sellQty")?.value || 0);
+      const total = qty * currentPricePerJar;
+
+      const priceEl = document.getElementById("staffPricePreview");
+      const totalEl = document.getElementById("staffTotalPreview");
+      const topPriceEl = document.getElementById("staffPricePreviewTop");
+      const topTotalEl = document.getElementById("staffTotalPreviewTop");
+
+      if (priceEl) priceEl.innerText = currentPricePerJar.toFixed(2);
+      if (totalEl) totalEl.innerText = total.toFixed(2);
+      if (topPriceEl) topPriceEl.innerText = currentPricePerJar.toFixed(2);
+      if (topTotalEl) topTotalEl.innerText = total.toFixed(2);
+    }
+
+    async function login() {
+      const username = document.getElementById("loginUsername").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+      const loginMsg = document.getElementById("loginMsg");
+
+      loginMsg.innerText = "";
+
+      if (!username || !password) {
+        loginMsg.innerText = "Please enter username and password";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          loginMsg.innerText = data.message || "Login failed";
+          return;
+        }
+
+        user = data.user;
+        localStorage.setItem("user", JSON.stringify(user));
+        openApp();
+      } catch (error) {
+        loginMsg.innerText = "Cannot connect to backend";
+      }
+    }
+
+    function openApp() {
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("adminLayout").classList.add("hidden");
+      document.getElementById("staffLayout").classList.add("hidden");
+
+      if (user.role === "admin") {
+        document.getElementById("adminLayout").classList.remove("hidden");
+        document.getElementById("adminSidebarUsername").innerText = user.username;
+        document.getElementById("adminSidebarRole").innerText = user.role;
+        document.getElementById("adminRoleLine").innerText = `Logged in as ${user.username} (${user.role})`;
+
+        loadSummary();
+        getCustomers();
+        loadCustomerDropdown();
+        loadSales();
+        loadReturns();
+      } else {
+        document.getElementById("staffLayout").classList.remove("hidden");
+        document.getElementById("staffRoleLine").innerText = `Logged in as ${user.username} (${user.role})`;
+        loadSummary();
+        loadCustomerDropdown();
+        loadStaffTodaySummary();
+        loadStaffRecentSales();
+        updateSalePreview();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("user");
+      user = null;
+      location.reload();
+    }
+
+    function resetCustomerForm() {
+      document.getElementById("customerId").value = "";
+      document.getElementById("customerCode").value = "";
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      document.getElementById("address").value = "";
+      document.getElementById("notes").value = "";
+      document.getElementById("customerMsg").innerText = "";
+    }
+
+    async function saveCustomer() {
+      const id = document.getElementById("customerId").value;
+      const customer_code = document.getElementById("customerCode").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const notes = document.getElementById("notes").value.trim();
+      const msg = document.getElementById("customerMsg");
+
+      if (!name) {
+        msg.style.color = "red";
+        msg.innerText = "Customer name is required";
+        return;
+      }
+
+      const url = id
+        ? `http://localhost:5000/customers/${id}`
+        : "http://localhost:5000/customers";
+
+      const method = id ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: authHeaders(),
+        body: JSON.stringify({ customer_code, name, phone, address, notes })
+      });
+
+      const data = await res.json();
+
+      msg.style.color = res.ok ? "green" : "red";
+      msg.innerText = data.message;
+
+      if (res.ok) {
+        resetCustomerForm();
+        getCustomers();
+        loadCustomerDropdown();
+        loadSummary();
+      }
+    }
+
+    async function getCustomers() {
+      const search = document.getElementById("customerSearch")?.value?.trim() || "";
+
+      try {
+        const res = await fetch(
+          `http://localhost:5000/customers?search=${encodeURIComponent(search)}`,
+          {
+            headers: {
+              "x-user-id": user.id,
+              "x-user-role": user.role
+            }
+          }
+        );
+
+        const data = await res.json();
+
+        if (document.getElementById("count")) {
+          document.getElementById("count").innerText = data.length;
+        }
+
+        const tbody = document.getElementById("customerTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        data.forEach((c) => {
+          const tr = document.createElement("tr");
+
+          tr.innerHTML = `
+            <td>${c.name || "-"}</td>
+            <td>${c.customer_code || "-"}</td>
+            <td>${c.phone || "-"}</td>
+            <td>${c.address || "-"}</td>
+            <td>${c.jars_outstanding}</td>
+            <td>Rs. ${Number(c.due_amount || 0).toFixed(2)}</td>
+            <td></td>
+          `;
+
+          const actionTd = tr.lastElementChild;
+
+          const wrap = document.createElement("div");
+          wrap.className = "inline-actions";
+
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "Edit";
+          editBtn.onclick = () => loadCustomerForEdit(c);
+
+          const deleteBtn = document.createElement("button");
+          deleteBtn.textContent = "Delete";
+          deleteBtn.className = "danger-btn";
+          deleteBtn.onclick = () => deleteCustomer(c.id);
+
+          wrap.appendChild(editBtn);
+          wrap.appendChild(deleteBtn);
+          actionTd.appendChild(wrap);
+
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    function loadCustomerForEdit(customer) {
+      document.getElementById("customerId").value = customer.id;
+      document.getElementById("customerCode").value = customer.customer_code || "";
+      document.getElementById("name").value = customer.name || "";
+      document.getElementById("phone").value = customer.phone || "";
+      document.getElementById("address").value = customer.address || "";
+      document.getElementById("notes").value = customer.notes || "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function deleteCustomer(id) {
+      if (!confirm("Delete this customer?")) return;
+
+      const res = await fetch(`http://localhost:5000/customers/${id}`, {
+        method: "DELETE",
+        headers: {
+          "x-user-id": user.id,
+          "x-user-role": user.role
+        }
+      });
+
+      const data = await res.json();
+      alert(data.message);
+      getCustomers();
+      loadCustomerDropdown();
+      loadSummary();
+    }
+
+    async function loadCustomerDropdown() {
+      try {
+        const res = await fetch("http://localhost:5000/customers", {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+        cachedCustomers = data;
+
+        const saleSelect = document.getElementById("customerSelect");
+        const returnSelect = document.getElementById("returnCustomerSelect");
+        const paymentSelect = document.getElementById("paymentCustomerSelect");
+        const ledgerSelect = document.getElementById("ledgerCustomerSelect");
+
+        if (saleSelect) saleSelect.innerHTML = '<option value="">Select Customer</option>';
+        if (returnSelect) returnSelect.innerHTML = '<option value="">Select Customer</option>';
+        if (paymentSelect) paymentSelect.innerHTML = '<option value="">Select Customer</option>';
+        if (ledgerSelect) ledgerSelect.innerHTML = '<option value="">Select Customer</option>';
+
+        data.forEach((customer) => {
+          if (saleSelect) {
+            const option = document.createElement("option");
+            option.value = customer.id;
+            option.textContent = `${customer.name} (${customer.phone || "No phone"})`;
+            saleSelect.appendChild(option);
+          }
+
+          if (returnSelect) {
+            const option = document.createElement("option");
+            option.value = customer.id;
+            option.textContent = `${customer.name} | Outstanding: ${customer.jars_outstanding}`;
+            returnSelect.appendChild(option);
+          }
+
+          if (paymentSelect) {
+            const option = document.createElement("option");
+            option.value = customer.id;
+            option.textContent = `${customer.name} (${customer.phone || "No phone"})`;
+            paymentSelect.appendChild(option);
+          }
+
+          if (ledgerSelect) {
+            const option = document.createElement("option");
+            option.value = customer.id;
+            option.textContent = `${customer.name} (${customer.phone || "No phone"})`;
+            ledgerSelect.appendChild(option);
+          }
+        });
+
+        renderStaffRecentActivity();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function sellProduct() {
+      const customer_id = document.getElementById("customerSelect").value;
+      const quantity = document.getElementById("sellQty").value;
+      const sellMsg = document.getElementById("sellMsg");
+
+      sellMsg.innerText = "";
+
+      if (!customer_id || !quantity) {
+        sellMsg.style.color = "red";
+        sellMsg.innerText = "Please select customer and enter quantity";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/sales", {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify({
+            customer_id: Number(customer_id),
+            quantity: Number(quantity)
+          })
+        });
+
+        const data = await res.json();
+
+        sellMsg.style.color = res.ok ? "green" : "red";
+        sellMsg.innerText = data.message;
+
+        if (res.ok) {
+          document.getElementById("sellQty").value = "";
+          updateSalePreview();
+          showToast("Sale recorded successfully");
+
+          if (user.role === "admin") {
+            loadSummary();
+            getCustomers();
+            loadCustomerDropdown();
+            loadSales();
+          } else {
+            loadSummary();
+            loadCustomerDropdown();
+            loadStaffTodaySummary();
+            loadStaffRecentSales();
+          }
+        }
+      } catch (error) {
+        sellMsg.style.color = "red";
+        sellMsg.innerText = "Failed to record sale";
+        showToast("Failed to record sale", true);
+      }
+if (!navigator.onLine) {
+  saveToQueue({
+    url: "http://YOUR-IP:5000/sales",
+    method: "POST",
+    body: {
+      customer_id: Number(customer_id),
+      quantity: Number(quantity)
+    }
+  });
+
+  showToast("Saved offline. Will sync later");
+  return;
+}
+
+    }
+
+    async function recordReturn() {
+      const customer_id = document.getElementById("returnCustomerSelect").value;
+      const quantity = document.getElementById("returnQty").value;
+      const returnMsg = document.getElementById("returnMsg");
+
+      returnMsg.innerText = "";
+
+      if (!customer_id || !quantity) {
+        returnMsg.style.color = "red";
+        returnMsg.innerText = "Please select customer and enter returned quantity";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/returns", {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify({
+            customer_id: Number(customer_id),
+            quantity: Number(quantity)
+          })
+        });
+
+        const data = await res.json();
+
+        returnMsg.style.color = res.ok ? "green" : "red";
+        returnMsg.innerText = data.message;
+
+        if (res.ok) {
+          document.getElementById("returnQty").value = "";
+          showToast("Return recorded successfully");
+
+          if (user.role === "admin") {
+            loadSummary();
+            getCustomers();
+            loadCustomerDropdown();
+            loadReturns();
+          } else {
+            loadSummary();
+            loadCustomerDropdown();
+            loadStaffTodaySummary();
+            loadStaffRecentSales();
+          }
+        }
+      } catch (error) {
+        returnMsg.style.color = "red";
+        returnMsg.innerText = "Failed to record return";
+        showToast("Failed to record return", true);
+      }
+      if (!navigator.onLine) {
+  saveToQueue({
+    url: "http://YOUR-IP:5000/returns",
+    method: "POST",
+    body: {
+      customer_id: Number(customer_id),
+      quantity: Number(quantity)
+    }
+  });
+
+  showToast("Saved offline. Will sync later");
+  return;
+}
+    }
+
+    async function recordPayment() {
+      const customer_id = document.getElementById("paymentCustomerSelect").value;
+      const amount = document.getElementById("paymentAmount").value;
+      const remarks = document.getElementById("paymentRemarks").value.trim();
+      const msg = document.getElementById("paymentMsg");
+
+      msg.innerText = "";
+
+      if (!customer_id || !amount) {
+        msg.style.color = "red";
+        msg.innerText = "Select customer and enter amount";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/payments", {
+          method: "POST",
+          headers: authHeaders(),
+          body: JSON.stringify({
+            customer_id: Number(customer_id),
+            amount: Number(amount),
+            remarks
+          })
+        });
+
+        const data = await res.json();
+
+        msg.style.color = res.ok ? "green" : "red";
+        msg.innerText = data.message;
+
+        if (res.ok) {
+          document.getElementById("paymentAmount").value = "";
+          document.getElementById("paymentRemarks").value = "";
+          loadSummary();
+          getCustomers();
+        }
+      } catch (error) {
+        msg.style.color = "red";
+        msg.innerText = "Failed to record payment";
+      }
+    }
+
+    async function loadCustomerLedger() {
+      const customerId = document.getElementById("ledgerCustomerSelect").value;
+      const msg = document.getElementById("ledgerMsg");
+
+      msg.innerText = "";
+
+      if (!customerId) {
+        msg.style.color = "red";
+        msg.innerText = "Select a customer";
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:5000/customer-ledger/${customerId}`, {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          msg.style.color = "red";
+          msg.innerText = data.message || "Failed to load ledger";
+          return;
+        }
+
+        document.getElementById("ledgerDetails").classList.remove("hidden");
+
+        document.getElementById("ledgerSummary").innerHTML = `
+          <p><strong>Name:</strong> ${data.customer.name}</p>
+          <p><strong>Phone:</strong> ${data.customer.phone || "-"}</p>
+          <p><strong>Customer Code:</strong> ${data.customer.customer_code || "-"}</p>
+          <p><strong>Address:</strong> ${data.customer.address || "-"}</p>
+          <p><strong>Jars With Customer:</strong> ${data.customer.jars_outstanding}</p>
+          <p><strong>Total Sales Amount:</strong> ${Number(data.customer.total_sales_amount).toFixed(2)}</p>
+          <p><strong>Total Paid Amount:</strong> ${Number(data.customer.total_paid_amount).toFixed(2)}</p>
+          <p><strong>Due Amount:</strong> ${Number(data.customer.due_amount).toFixed(2)}</p>
+        `;
+
+        const salesList = document.getElementById("ledgerSalesList");
+        salesList.innerHTML = "";
+        data.sales.forEach((sale) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            Sale #${sale.id} | Qty: ${sale.quantity} | Amount: ${sale.total_amount} | Date: ${sale.sale_date} | Status: ${sale.status}
+          `;
+          salesList.appendChild(li);
+        });
+
+        const returnsList = document.getElementById("ledgerReturnsList");
+        returnsList.innerHTML = "";
+        data.returns.forEach((ret) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            Return #${ret.id} | Qty: ${ret.quantity} | Date: ${ret.return_date}
+          `;
+          returnsList.appendChild(li);
+        });
+
+        const paymentsList = document.getElementById("ledgerPaymentsList");
+        paymentsList.innerHTML = "";
+        data.payments.forEach((payment) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            Payment #${payment.id} | Amount: ${payment.amount} | Date: ${payment.payment_date} | Remarks: ${payment.remarks || "-"}
+          `;
+          paymentsList.appendChild(li);
+        });
+
+        msg.style.color = "green";
+        msg.innerText = "Ledger loaded successfully";
+      } catch (error) {
+        msg.style.color = "red";
+        msg.innerText = "Failed to load ledger";
+      }
+    }
+
+    async function refillStock() {
+      const added_quantity = document.getElementById("addedQty").value;
+      const price_per_jar = document.getElementById("newPrice").value;
+      const low_stock_threshold = document.getElementById("newThreshold").value;
+      const stockMsg = document.getElementById("stockMsg");
+
+      const res = await fetch("http://localhost:5000/stock/refill", {
+        method: "POST",
+        headers: authHeaders(),
+        body: JSON.stringify({ added_quantity, price_per_jar, low_stock_threshold })
+      });
+
+      const data = await res.json();
+      stockMsg.style.color = res.ok ? "green" : "red";
+      stockMsg.innerText = data.message;
+
+      if (res.ok) {
+        document.getElementById("addedQty").value = "";
+        document.getElementById("newPrice").value = "";
+        document.getElementById("newThreshold").value = "";
+        loadSummary();
+      }
+    }
+
+    async function loadSales() {
+      try {
+        const from = document.getElementById("fromDate").value;
+        const to = document.getElementById("toDate").value;
+
+        let url = "http://localhost:5000/sales";
+        const params = new URLSearchParams();
+
+        if (from) params.append("from", from);
+        if (to) params.append("to", to);
+
+        if (params.toString()) {
+          url += `?${params.toString()}`;
+        }
+
+        const res = await fetch(url, {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+
+        const tbody = document.getElementById("salesTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        data.forEach((sale) => {
+          const tr = document.createElement("tr");
+
+          const statusClass = sale.status === "completed" ? "badge-green" : "badge-red";
+
+          tr.innerHTML = `
+            <td>${sale.customer}</td>
+            <td>${sale.staff}</td>
+            <td>${sale.quantity}</td>
+            <td>${sale.price_per_jar}</td>
+            <td>${sale.total_amount}</td>
+            <td>${sale.sale_date}</td>
+            <td><span class="badge ${statusClass}">${sale.status}</span></td>
+            <td></td>
+          `;
+
+          const actionTd = tr.lastElementChild;
+
+          if (sale.status === "completed") {
+            const btn = document.createElement("button");
+            btn.textContent = "Cancel";
+            btn.className = "danger-btn";
+            btn.onclick = () => cancelSale(sale.id);
+            actionTd.appendChild(btn);
+          } else {
+            actionTd.innerText = "-";
+          }
+
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function loadReturns() {
+      try {
+        const from = document.getElementById("returnFromDate").value;
+        const to = document.getElementById("returnToDate").value;
+
+        let url = "http://localhost:5000/returns";
+        const params = new URLSearchParams();
+
+        if (from) params.append("from", from);
+        if (to) params.append("to", to);
+
+        if (params.toString()) {
+          url += `?${params.toString()}`;
+        }
+
+        const res = await fetch(url, {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+
+        const tbody = document.getElementById("returnsTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = "";
+
+        data.forEach((ret) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${ret.customer}</td>
+            <td>${ret.staff}</td>
+            <td>${ret.quantity}</td>
+            <td>${ret.return_date}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function cancelSale(id) {
+      if (!confirm("Cancel this sale and restore stock?")) return;
+
+      const res = await fetch(`http://localhost:5000/sales/${id}/cancel`, {
+        method: "PUT",
+        headers: {
+          "x-user-id": user.id,
+          "x-user-role": user.role
+        }
+      });
+
+      const data = await res.json();
+      alert(data.message);
+      loadSummary();
+      getCustomers();
+      loadCustomerDropdown();
+      loadSales();
+    }
+
+    async function loadSummary() {
+      try {
+        const res = await fetch("http://localhost:5000/dashboard/summary", {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+
+        if (document.getElementById("stock")) {
+          document.getElementById("stock").innerText = data.stock.quantity;
+        }
+        if (document.getElementById("count")) {
+          document.getElementById("count").innerText = data.total_customers;
+        }
+        if (document.getElementById("jarsSoldToday")) {
+          document.getElementById("jarsSoldToday").innerText = data.jars_sold_today;
+        }
+        if (document.getElementById("revenueToday")) {
+          document.getElementById("revenueToday").innerText = data.revenue_today;
+        }
+        if (document.getElementById("jarsSoldMonth")) {
+          document.getElementById("jarsSoldMonth").innerText = data.jars_sold_month;
+        }
+        if (document.getElementById("revenueMonth")) {
+          document.getElementById("revenueMonth").innerText = data.revenue_month;
+        }
+        if (document.getElementById("pricePerJar")) {
+          document.getElementById("pricePerJar").innerText = data.stock.price_per_jar;
+        }
+        if (document.getElementById("lowStockThreshold")) {
+          document.getElementById("lowStockThreshold").innerText = data.stock.low_stock_threshold;
+        }
+        if (document.getElementById("totalJarsWithCustomers")) {
+          document.getElementById("totalJarsWithCustomers").innerText = data.total_jars_with_customers;
+        }
+        if (document.getElementById("jarsReturnedToday")) {
+          document.getElementById("jarsReturnedToday").innerText = data.jars_returned_today;
+        }
+
+        currentPricePerJar = Number(data.stock.price_per_jar || 0);
+        updateSalePreview();
+
+        const alertBox = document.getElementById("lowStockAlert");
+        if (alertBox) {
+          if (data.stock.quantity <= data.stock.low_stock_threshold) {
+            alertBox.innerText = `Low stock alert: only ${data.stock.quantity} jars left`;
+          } else {
+            alertBox.innerText = "";
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async function loadStaffTodaySummary() {
+      if (!user || user.role !== "staff") return;
+
+      try {
+        const res = await fetch("http://localhost:5000/staff/today-summary", {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+
+        const jarsEl = document.getElementById("staffTodayJars");
+        const amountEl = document.getElementById("staffTodayAmount");
+
+        if (jarsEl) jarsEl.innerText = data.total_jars_sold || 0;
+        if (amountEl) amountEl.innerText = Number(data.total_sales_amount || 0).toFixed(2);
+      } catch (error) {
+        console.log("Staff today summary error", error);
+      }
+    }
+
+    async function loadStaffRecentSales() {
+      if (!user || user.role !== "staff") return;
+
+      try {
+        const res = await fetch("http://localhost:5000/staff/recent-sales", {
+          headers: {
+            "x-user-id": user.id,
+            "x-user-role": user.role
+          }
+        });
+
+        const data = await res.json();
+        const list = document.getElementById("staffRecentSalesList");
+        if (!list) return;
+
+        list.innerHTML = "";
+
+        if (!data.length) {
+          list.innerHTML = "<li>No recent sales yet.</li>";
+          return;
+        }
+
+        data.forEach((sale) => {
+          const li = document.createElement("li");
+          li.innerHTML = `
+            <strong>${sale.customer}</strong><br>
+            Qty: ${sale.quantity} jars<br>
+            Amount: Rs. ${Number(sale.total_amount).toFixed(2)}<br>
+            Date: ${sale.sale_date}
+          `;
+          list.appendChild(li);
+        });
+      } catch (error) {
+        console.log("Staff recent sales error", error);
+      }
+    }
+
+    function renderStaffRecentActivity() {
+      const list = document.getElementById("staffRecentActivity");
+      if (!list) return;
+
+      list.innerHTML = "";
+
+      const recentCustomers = cachedCustomers.slice(0, 5);
+
+      if (recentCustomers.length === 0) {
+        list.innerHTML = "<li>No recent customer data available.</li>";
+        return;
+      }
+
+      recentCustomers.forEach((customer) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <strong>${customer.name}</strong><br>
+          Phone: ${customer.phone || "-"}<br>
+          Outstanding Jars: ${customer.jars_outstanding}<br>
+          Due: Rs. ${Number(customer.due_amount || 0).toFixed(2)}
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    window.onload = () => {
+      const saved = localStorage.getItem("user");
+
+      if (saved) {
+        user = JSON.parse(saved);
+        openApp();
+      }
+    };
+
+let offlineQueue = JSON.parse(localStorage.getItem("offlineQueue") || "[]");
+
+function saveToQueue(action) {
+  offlineQueue.push(action);
+  localStorage.setItem("offlineQueue", JSON.stringify(offlineQueue));
+}
+
+async function syncOfflineData() {
+  if (!navigator.onLine || offlineQueue.length === 0) return;
+
+  const queueCopy = [...offlineQueue];
+
+  for (const item of queueCopy) {
+    try {
+      await fetch(item.url, {
+        method: item.method,
+        headers: authHeaders(),
+        body: JSON.stringify(item.body)
+      });
+
+      offlineQueue.shift();
+    } catch (err) {
+      break;
+    }
+  }
+
+  localStorage.setItem("offlineQueue", JSON.stringify(offlineQueue));
+}
+
+window.addEventListener("online", syncOfflineData);
+
+  </script>
+</body>
+</html>
