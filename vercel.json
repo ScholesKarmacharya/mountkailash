@@ -1,0 +1,52 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "server.js"
+    },
+    {
+      "src": "/login",
+      "dest": "server.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/register",
+      "dest": "server.js",
+      "methods": ["POST"]
+    },
+    {
+      "src": "/customers",
+      "dest": "server.js"
+    },
+    {
+      "src": "/orders",
+      "dest": "server.js"
+    },
+    {
+      "src": "/export",
+      "dest": "server.js"
+    },
+    {
+      "src": "/(.*\\..*)",
+      "dest": "www/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "www/index.html"
+    }
+  ],
+  "env": {
+    "DB_HOST": "@db_host",
+    "DB_USER": "@db_user",
+    "DB_PASSWORD": "@db_password",
+    "DB_NAME": "@db_name",
+    "DB_PORT": "@db_port"
+  }
+}
