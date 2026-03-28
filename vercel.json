@@ -4,6 +4,10 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "www/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -22,20 +26,12 @@
       "methods": ["POST"]
     },
     {
-      "src": "/customers",
+      "src": "/customers|/orders|/sales|/returns|/payments|/export|/stock",
       "dest": "server.js"
     },
     {
-      "src": "/orders",
-      "dest": "server.js"
-    },
-    {
-      "src": "/export",
-      "dest": "server.js"
-    },
-    {
-      "src": "/(.*\\..*)",
-      "dest": "www/$1"
+      "src": "/(?:.*\\.(?:js|css|png|jpg|jpeg|gif|svg|woff|woff2|eot|ttf|otf|ico|webp|manifest|json))$",
+      "dest": "www/$0"
     },
     {
       "src": "/(.*)",
