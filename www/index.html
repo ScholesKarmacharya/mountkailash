@@ -1136,7 +1136,7 @@
       }
 
       try {
-        const res = await fetch("http://localhost:5000/login", {
+        const res = await fetch("/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -1218,8 +1218,8 @@
       }
 
       const url = id
-        ? `http://localhost:5000/customers/${id}`
-        : "http://localhost:5000/customers";
+        ? `/customers/${id}`
+        : "/customers";
 
       const method = id ? "PUT" : "POST";
 
@@ -1247,7 +1247,7 @@
 
       try {
         const res = await fetch(
-          `http://localhost:5000/customers?search=${encodeURIComponent(search)}`,
+          `/customers?search=${encodeURIComponent(search)}`,
           {
             headers: {
               "x-user-id": user.id,
@@ -1318,7 +1318,7 @@
     async function deleteCustomer(id) {
       if (!confirm("Delete this customer?")) return;
 
-      const res = await fetch(`http://localhost:5000/customers/${id}`, {
+      const res = await fetch(`/customers/${id}`, {
         method: "DELETE",
         headers: {
           "x-user-id": user.id,
@@ -1335,7 +1335,7 @@
 
     async function loadCustomerDropdown() {
       try {
-        const res = await fetch("http://localhost:5000/customers", {
+        const res = await fetch("/customers", {
           headers: {
             "x-user-id": user.id,
             "x-user-role": user.role
@@ -1405,7 +1405,7 @@
       }
 
       try {
-        const res = await fetch("http://localhost:5000/sales", {
+        const res = await fetch("/sales", {
           method: "POST",
           headers: authHeaders(),
           body: JSON.stringify({
@@ -1443,7 +1443,7 @@
       }
 if (!navigator.onLine) {
   saveToQueue({
-    url: "http://YOUR-IP:5000/sales",
+    url: "/sales",
     method: "POST",
     body: {
       customer_id: Number(customer_id),
@@ -1471,7 +1471,7 @@ if (!navigator.onLine) {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/returns", {
+        const res = await fetch("/returns", {
           method: "POST",
           headers: authHeaders(),
           body: JSON.stringify({
@@ -1508,7 +1508,7 @@ if (!navigator.onLine) {
       }
       if (!navigator.onLine) {
   saveToQueue({
-    url: "http://YOUR-IP:5000/returns",
+    url: "/returns",
     method: "POST",
     body: {
       customer_id: Number(customer_id),
@@ -1536,7 +1536,7 @@ if (!navigator.onLine) {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/payments", {
+        const res = await fetch("/payments", {
           method: "POST",
           headers: authHeaders(),
           body: JSON.stringify({
@@ -1576,7 +1576,7 @@ if (!navigator.onLine) {
       }
 
       try {
-        const res = await fetch(`http://localhost:5000/customer-ledger/${customerId}`, {
+        const res = await fetch(`/customer-ledger/${customerId}`, {
           headers: {
             "x-user-id": user.id,
             "x-user-role": user.role
@@ -1648,7 +1648,7 @@ if (!navigator.onLine) {
       const low_stock_threshold = document.getElementById("newThreshold").value;
       const stockMsg = document.getElementById("stockMsg");
 
-      const res = await fetch("http://localhost:5000/stock/refill", {
+      const res = await fetch("/stock/refill", {
         method: "POST",
         headers: authHeaders(),
         body: JSON.stringify({ added_quantity, price_per_jar, low_stock_threshold })
@@ -1671,7 +1671,7 @@ if (!navigator.onLine) {
         const from = document.getElementById("fromDate").value;
         const to = document.getElementById("toDate").value;
 
-        let url = "http://localhost:5000/sales";
+        let url = "/sales";
         const params = new URLSearchParams();
 
         if (from) params.append("from", from);
@@ -1735,7 +1735,7 @@ if (!navigator.onLine) {
         const from = document.getElementById("returnFromDate").value;
         const to = document.getElementById("returnToDate").value;
 
-        let url = "http://localhost:5000/returns";
+        let url = "/returns";
         const params = new URLSearchParams();
 
         if (from) params.append("from", from);
@@ -1777,7 +1777,7 @@ if (!navigator.onLine) {
     async function cancelSale(id) {
       if (!confirm("Cancel this sale and restore stock?")) return;
 
-      const res = await fetch(`http://localhost:5000/sales/${id}/cancel`, {
+      const res = await fetch(`/sales/${id}/cancel`, {
         method: "PUT",
         headers: {
           "x-user-id": user.id,
@@ -1795,7 +1795,7 @@ if (!navigator.onLine) {
 
     async function loadSummary() {
       try {
-        const res = await fetch("http://localhost:5000/dashboard/summary", {
+        const res = await fetch("/dashboard/summary", {
           headers: {
             "x-user-id": user.id,
             "x-user-role": user.role
@@ -1855,7 +1855,7 @@ if (!navigator.onLine) {
       if (!user || user.role !== "staff") return;
 
       try {
-        const res = await fetch("http://localhost:5000/staff/today-summary", {
+        const res = await fetch("/staff/today-summary", {
           headers: {
             "x-user-id": user.id,
             "x-user-role": user.role
@@ -1878,7 +1878,7 @@ if (!navigator.onLine) {
       if (!user || user.role !== "staff") return;
 
       try {
-        const res = await fetch("http://localhost:5000/staff/recent-sales", {
+        const res = await fetch("/staff/recent-sales", {
           headers: {
             "x-user-id": user.id,
             "x-user-role": user.role
