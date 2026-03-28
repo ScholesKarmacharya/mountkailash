@@ -2,8 +2,12 @@ const db = require("./db");
 const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const initializeDatabase = require("./init-db");
 
 dotenv.config();
+
+// Initialize database with schema and sample data
+initializeDatabase();
 
 const app = express();
 
